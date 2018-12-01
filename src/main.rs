@@ -18,9 +18,11 @@ fn draw_light(width: u32, height: u32) {
 
 fn sample(x: f32, y: f32) -> f32 {
     let mut sum = 0.0;
-    for _ in 0..64 {
+    for i in 0..64 {
         let rand: f32 =  rand::random::<f32>();
-        let a: f32 = std::f32::consts::PI * 2.0 * rand;
+        //let a: f32 = std::f32::consts::PI * 2.0 * rand;               // 均匀采样
+        //let a: f32 = std::f32::consts::PI * 2.0 * i as f32 / 64.0;    // 分层采样
+        let a: f32 = std::f32::consts::PI * 2.0 * (i as f32 + rand) / 64 as f32; // 抖动采样
         sum = sum + trace(x, y, a.cos(), a.sin());
     }
     sum / 64.0
